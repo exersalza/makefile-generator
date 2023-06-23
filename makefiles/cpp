@@ -1,0 +1,28 @@
+CXX = g++
+CXXFLAGS = -std=c++2a
+
+PROJECT_NAME = 
+
+OBJS = 
+
+.PHONY: run
+.PHONY: clean
+.PHONY: install
+.PHONY: uninstall
+
+all: main
+
+main: main.cpp $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+run:
+	./main
+
+clean:
+	rm -f $(OBJS) main
+
+install:
+	sudo cp main /usr/bin/$(PROJECT_NAME)
+
+uninstall:
+	sudo rm /usr/bin/$(PROJECT_NAME)
