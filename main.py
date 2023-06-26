@@ -11,12 +11,26 @@ def checkIfInstalled() -> int:
     print("Can't find any Makefiles to copy, make sure that the program is installed.")
     return 1
 
-def isLangAvailable(lang) -> int:
+
+def isListThingi(lang, installed_langs) -> int:
+    if lang != "-l":
+        return 1
+
+    print(", ".join(installed_langs))
+    
+    return 0
+
+
+def isLangParam(lang) -> int:
     installed_langs = os.listdir(MK_PATH)
+
+    if not isListThingi(lang, installed_langs): return 1
+
     if lang not in installed_langs:
         print(f"${lang} is not available")
         return 1
     return 0
+
 
 def doCopy(lang) -> int:
     if os.path.exists("./makefile"):
@@ -26,6 +40,7 @@ def doCopy(lang) -> int:
 
     shutil.copy(MK_PATH + lang, "./makefile")
     return 0
+
 
 def main() -> int:
     # Creates a Makefile depending on the language given.
@@ -38,11 +53,11 @@ def main() -> int:
     lang = sys.argv[1]
     
     if checkIfInstalled(): return 1
-    if isLangAvailable(lang): return 1
-    
-    doCopy(lang)
+    if not isLangParam(lang):
+        doCopy(lang)
     
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
