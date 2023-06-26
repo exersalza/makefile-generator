@@ -11,7 +11,7 @@ def checkIfInstalled() -> int:
     print("Can't find any Makefiles to copy, make sure that the program is installed.")
     return 1
 
-def langValid(lang) -> int:
+def isLangAvailable(lang) -> int:
     installed_langs = os.listdir(MK_PATH)
     if lang not in installed_langs:
         print(f"${lang} is not available")
@@ -36,8 +36,9 @@ def main() -> int:
         return 1
     
     lang = sys.argv[1]
+    
     if checkIfInstalled(): return 1
-    if langValid(lang): return 1
+    if isLangAvailable(lang): return 1
     
     doCopy(lang)
     
@@ -45,5 +46,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-
 
